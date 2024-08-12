@@ -3,17 +3,13 @@ import Image from "next/image";
 import BtnPrimary from "./components/BtnPrimary";
 import LineGradHorizontal from "./components/LineGradHorizontal";
 import iconAiSparkle from '../../public/images/ai-sparkle.svg';
+import iconViewGridActive from '../../public/images/view-grid-active.svg';
 import iconViewGrid from '../../public/images/view-grid.svg';
+import iconViewListActive from '../../public/images/view-list-active.svg';
 import iconViewList from '../../public/images/view-list.svg';
 import JobCard from "./components/JobCard";
 import { useEffect, useState } from "react";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 const initialJobs = [
     {
@@ -129,11 +125,25 @@ export default function Home() {
                                 </div>
                                 <div className="flex flex-grow items-center border border-[#585858F0] rounded-lg">
                                     <button className="px-3 py-2" title="icon-view-grid" name="icon-view-grid" onClick={()=>{setView(false)}}>
-                                        <Image className="" src={iconViewGrid} alt="" width="16" height="16"/>
+                                        {
+                                            view?(
+                                                <Image src={iconViewGrid} alt="" width="16" height="16"/>
+                                            )
+                                            :(
+                                                <Image src={iconViewGridActive} alt="" width="16" height="16"/>
+                                            )
+                                        }
                                     </button>
                                     <div className="bg-[#585858F0] w-[1px] h-[15px]"></div>
                                     <button className="px-3 py-2" title="icon-view-list" name="icon-view-list" onClick={()=>{setView(true)}}>
-                                        <Image className="" src={iconViewList} alt="" width ="18" height="14"/>
+                                        {
+                                            view?(
+                                                <Image src={iconViewListActive} alt="" width="16" height="16"/>
+                                            )
+                                            :(
+                                                <Image src={iconViewList} alt="" width="16" height="16"/>
+                                            )
+                                        }
                                     </button>
                                 </div>
                             </div>
@@ -141,7 +151,7 @@ export default function Home() {
                         <div className={`cards-container grid grid-cols-1 gap-3 ${view?"":"grid-rows-[auto_auto_auto] md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-6"}`}>
                             {
                                 jobs.map((job, index) => (
-                                    <JobCard key={index} title={job.title} subtitle={job.subtitle} view={view} matched={parseInt(job.matched)} selected={parseInt(job.selected)} />
+                                    <JobCard key={index} title={job.title} subtitle={job.subtitle} view={view} matched={job.matched} selected={job.selected} />
                                 ))
                             }
                         </div>
